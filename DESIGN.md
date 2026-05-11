@@ -1,5 +1,47 @@
 # InstrTek Design Log
 
+## 2026-05-11: Manufacturing AI Quality & Test Copilot Pivot
+
+### Goal
+
+Reposition the website from a broad AI founder toolkit into a focused B2B lead-generation website for manufacturing quality and test engineering teams.
+
+### Product Decisions
+
+- Use the primary positioning: "Manufacturing AI Quality & Test Copilot / 制造业 AI 质量与测试工程助手."
+- Focus the first version on trust, clarity, and lead capture rather than live AI processing.
+- Present three core solutions:
+  - AI Test Document Comparison
+  - AI Quality Report & 8D Assistant
+  - Manufacturing Knowledge Base Agent
+- Use simulated demo data only. Do not process real customer documents in the first version.
+- Preserve future product expansion paths: document comparison demo, quality report generation, knowledge base, and local deployment.
+
+### UX Decisions
+
+- Convert the site into a single-page B2B landing page with anchor navigation.
+- Implement the required navigation sections: 首页, 解决方案, 应用场景, Demo案例, 技术架构, 服务模式, 资源中心, 联系我们.
+- Add a mobile collapsible menu for phone access.
+- Make CTA buttons scroll to the contact form.
+- Add a mock contact form with simulated submission feedback.
+- Keep all first-version content static and safe for public display.
+
+### Language Decision
+
+- The public website interface is English-only to support international manufacturing, automation, medical device, electronics, and precision manufacturing customers.
+- Chinese content remains only in internal planning documentation where useful; no Chinese strings should appear in `src/` or `index.html`.
+
+### Visual Decisions
+
+- Move from warm founder-tool styling to a cleaner industrial B2B style.
+- Use deep blue, blue-gray, cyan, white, and light gray as the core palette.
+- Use dashboard, report table, architecture flow, and service cards to signal engineering credibility.
+- Keep layouts restrained and professional, avoiding decorative or consumer-AI styling.
+
+### Business Hypothesis
+
+Manufacturing customers are more likely to engage if the website clearly shows a narrow, credible workflow: document extraction, specification comparison, quality report generation, and private engineering knowledge base deployment.
+
 ## 2026-05-11: AI Founder Toolkit Repositioning
 
 ### Goal
