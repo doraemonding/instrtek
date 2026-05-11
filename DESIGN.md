@@ -37,6 +37,11 @@ Reposition the website from a broad AI founder toolkit into a focused B2B lead-g
 - Use conservative wording such as "AI-assisted", "draft", "review", "assessment", "option", and "engineer confirmation" instead of implying unsupervised automated conclusions.
 - Avoid public UI terms such as "generated", "AI Agent", "risk report", "guarantee", "secure", "protect", and "automatically" unless reviewed for context.
 
+### Contact Decision
+
+- Public company contact email is `service@instrtek.com`.
+- The current contact form is a simulated frontend form and should not imply that email is sent until a real backend or form service is connected.
+
 ### Visual Decisions
 
 - Move from warm founder-tool styling to a cleaner industrial B2B style.

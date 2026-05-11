@@ -33,6 +33,7 @@
 - 资源中心静态卡片
 - 后续 AI Demo 产品路线
 - 联系表单模拟提交
+- 公司联系邮箱：`service@instrtek.com`
 - SEO title / description / keywords
 - Official InstrTek logo assets in `public/instrtek-logo.png` and `public/instrtek-symbol.png`
 
@@ -44,6 +45,7 @@
 - 支付
 - 数据库
 - 后台管理
+- 联系表单自动发送邮件
 
 ## Tech Stack
 

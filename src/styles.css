@@ -567,6 +567,14 @@ th { color: var(--muted); background: var(--surface-soft); font-size: 12px; text
 }
 .contact-note { padding: 22px; }
 .contact-note p { color: var(--muted); line-height: 1.65; }
+.email-link {
+  display: inline-flex;
+  margin-top: 12px;
+  color: var(--blue-dark);
+  font-weight: 900;
+  text-decoration: none;
+}
+.email-link:hover { text-decoration: underline; }
 .contact-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -616,6 +624,14 @@ textarea { resize: vertical; }
   opacity: 0.92;
 }
 .footer p { margin: 6px 0 0; color: rgba(255,255,255,0.72); }
+.footer a {
+  display: inline-flex;
+  margin-top: 8px;
+  color: rgba(255,255,255,0.86);
+  font-weight: 800;
+  text-decoration: none;
+}
+.footer a:hover { text-decoration: underline; }
 .footer button {
   border: 1px solid rgba(255,255,255,0.28);
   background: rgba(255,255,255,0.08);

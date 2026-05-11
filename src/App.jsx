@@ -379,6 +379,7 @@ function ContactForm() {
         <div className="contact-note">
           <strong>Good topics for the first discussion</strong>
           <p>Test document comparison, supplier report review, 8D / CAPA report drafts, engineering knowledge bases, on-premise deployment options, and private cloud options.</p>
+          <a className="email-link" href="mailto:service@instrtek.com">service@instrtek.com</a>
         </div>
       </div>
 
@@ -411,7 +412,7 @@ function ContactForm() {
         </label>
         <label className="wide">Current pain point<textarea name="pain" rows="4" required /></label>
         <button className="button primary wide" type="submit">Submit request</button>
-        {submitted && <p className="success wide">Thanks for submitting. We will contact you soon.</p>}
+        {submitted && <p className="success wide">Thanks for submitting. This demo form does not send email yet. Please also contact service@instrtek.com.</p>}
       </form>
     </section>
   );
@@ -423,6 +424,7 @@ function Footer() {
       <div>
         <img src="/instrtek-logo.png" alt="InstrTek" />
         <p>Manufacturing AI Quality & Test Copilot</p>
+        <a href="mailto:service@instrtek.com">service@instrtek.com</a>
       </div>
       <button onClick={() => scrollToSection("contact")}>Book a Demo</button>
     </footer>
