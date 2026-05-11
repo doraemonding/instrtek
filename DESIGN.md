@@ -31,12 +31,20 @@ Reposition the website from a broad AI founder toolkit into a focused B2B lead-g
 - The public website interface is English-only to support international manufacturing, automation, medical device, electronics, and precision manufacturing customers.
 - Chinese content remains only in internal planning documentation where useful; no Chinese strings should appear in `src/` or `index.html`.
 
+### Compliance Copy Decision
+
+- Public-facing copy should avoid absolute claims, autonomous decision claims, security guarantees, and sensitive or overly broad regulatory language.
+- Use conservative wording such as "AI-assisted", "draft", "review", "assessment", "option", and "engineer confirmation" instead of implying unsupervised automated conclusions.
+- Avoid public UI terms such as "generated", "AI Agent", "risk report", "guarantee", "secure", "protect", and "automatically" unless reviewed for context.
+
 ### Visual Decisions
 
 - Move from warm founder-tool styling to a cleaner industrial B2B style.
 - Use deep blue, blue-gray, cyan, white, and light gray as the core palette.
 - Use dashboard, report table, architecture flow, and service cards to signal engineering credibility.
 - Keep layouts restrained and professional, avoiding decorative or consumer-AI styling.
+- Use the official InstrTek logo from `instrtek 公司logo设计-1.pdf` as the primary website brand mark.
+- Raise the homepage toward a premium enterprise AI style: concise hero claim, strong navigation CTA, glassy console preview, platform signal band, and private-deployment trust messaging.
 
 ### Business Hypothesis
 

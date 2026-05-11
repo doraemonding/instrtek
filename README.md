@@ -34,6 +34,7 @@
 - 后续 AI Demo 产品路线
 - 联系表单模拟提交
 - SEO title / description / keywords
+- Official InstrTek logo assets in `public/instrtek-logo.png` and `public/instrtek-symbol.png`
 
 暂不实现：
 

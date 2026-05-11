@@ -3,6 +3,7 @@ import {
   architectureLayers,
   demoRows,
   painPoints,
+  platformSignals,
   resources,
   roadmap,
   scenarios,
@@ -48,11 +49,7 @@ function Navbar() {
   return (
     <header className="site-header">
       <button className="brand" onClick={() => handleNav("home")} aria-label="Manufacturing AI Copilot home">
-        <span className="brand-mark">AI</span>
-        <span>
-          <strong>Manufacturing Copilot</strong>
-          <small>Quality & Test Engineering</small>
-        </span>
+        <img src="/instrtek-logo.png" alt="InstrTek" />
       </button>
 
       <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="site-nav">
@@ -67,6 +64,7 @@ function Navbar() {
             {label}
           </button>
         ))}
+        <button className="nav-cta" onClick={() => handleNav("contact")}>Book Demo</button>
       </nav>
     </header>
   );
@@ -76,14 +74,13 @@ function Hero() {
   return (
     <section id="home" className="hero section">
       <div className="hero-copy">
-        <p className="eyebrow">Industrial Intelligence for Quality Teams</p>
+        <p className="eyebrow">InstrTek Industrial AI Platform</p>
         <h1>
-          Manufacturing AI Quality & Test Copilot
-          <span>AI assistant for manufacturing quality, validation, and test engineering teams</span>
+          AI-assisted workflows for manufacturing quality teams.
         </h1>
         <p className="lead">
-          Help manufacturing teams extract test documents, compare engineering specifications, generate quality reports,
-          and build a private engineering knowledge base.
+          InstrTek helps manufacturing teams review test documents, compare engineering specifications,
+          draft quality reports, and organize engineering knowledge for internal use.
         </p>
         <div className="hero-actions">
           <button className="button primary" onClick={() => scrollToSection("contact")}>Book a Demo</button>
@@ -91,15 +88,21 @@ function Hero() {
         </div>
         <div className="trust-row">
           <span>PDF / Word / Excel / Image</span>
-          <span>Private Cloud</span>
-          <span>Local Deployment</span>
+          <span>Private Cloud Option</span>
+          <span>On-premise Option</span>
+          <span>Human-reviewed outputs</span>
         </div>
       </div>
 
       <div className="dashboard-card" aria-label="Demo dashboard preview">
         <div className="dashboard-top">
-          <span>Document Comparison</span>
-          <strong>Risk report generated</strong>
+          <span>InstrTek Review Console</span>
+          <strong>Review summary prepared</strong>
+        </div>
+        <div className="workflow-tabs">
+          <span className="active">Compare</span>
+          <span>Extract</span>
+          <span>Report</span>
         </div>
         <div className="upload-grid">
           <div>
@@ -116,11 +119,31 @@ function Hero() {
           <div><strong>7</strong><span>parameter differences found</span></div>
           <div><strong>3</strong><span>missing test items</span></div>
         </div>
-        <div className="risk-strip">
-          <span>Medium Risk</span>
-          <span>High Risk</span>
+        <div className="priority-strip">
+          <span>Medium Priority</span>
+          <span>High Priority</span>
           <span>Action Required</span>
         </div>
+        <div className="console-line">
+          <span />
+          <p>Traceable draft output with source references, review rationale, and engineer confirmation workflow.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PlatformSignals() {
+  return (
+    <section className="signal-band">
+      <div className="signal-inner">
+        {platformSignals.map((item) => (
+          <article key={item.title}>
+            <span>{item.kicker}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
       </div>
     </section>
   );
@@ -150,7 +173,7 @@ function ValueProps() {
     <section className="section split-section">
       <SectionHeader
         eyebrow="Core Value"
-        title="Use AI to improve engineering documentation, test validation, and quality analysis"
+        title="Use AI-assisted review to improve engineering documentation, test validation, and quality analysis"
       />
       <div className="value-list">
         {valueProps.map((item) => (
@@ -169,8 +192,8 @@ function Solutions() {
     <section id="solutions" className="section band">
       <SectionHeader
         eyebrow="Solutions"
-        title="Three practical AI solutions for manufacturing engineering teams"
-        subtitle="The first version focuses on test document comparison, quality report generation, and manufacturing knowledge base workflows, with room to expand into live AI demos and PoC delivery."
+        title="Three practical AI-assisted solutions for manufacturing engineering teams"
+        subtitle="The first version focuses on test document comparison, quality report drafting, and manufacturing knowledge base workflows, with room to expand into controlled demos and PoC delivery."
       />
       <div className="solution-stack">
         {solutions.map((solution) => (
@@ -228,19 +251,19 @@ function DemoCase() {
             "58 test items extracted",
             "7 parameter differences found",
             "3 missing test items found",
-            "Risk levels generated",
+            "Review priority labels prepared",
             "Excel difference table exported",
-            "English summary report generated",
+            "English summary draft prepared",
           ].map((item) => <span key={item}>{item}</span>)}
         </div>
         <p className="callout">
-          Document review time can drop from 2-3 hours to 10-15 minutes, with engineers reviewing AI-generated differences instead of manually searching for them.
+          Document review time can be reduced from 2-3 hours to 10-15 minutes in a pilot workflow, with engineers confirming AI-assisted difference drafts.
         </p>
       </div>
       <div className="report-card">
         <div className="report-head">
           <strong>Comparison Report Preview</strong>
-          <span>Generated by AI Agent</span>
+          <span>Prepared by AI-assisted workflow</span>
         </div>
         <table>
           <thead>
@@ -248,7 +271,7 @@ function DemoCase() {
               <th>Item</th>
               <th>Document A</th>
               <th>Document B</th>
-              <th>Risk</th>
+              <th>Priority</th>
             </tr>
           </thead>
           <tbody>
@@ -257,7 +280,7 @@ function DemoCase() {
                 <td>{row.item}</td>
                 <td>{row.a}</td>
                 <td>{row.b}</td>
-                <td><span className={`risk ${row.risk.toLowerCase()}`}>{row.risk}</span></td>
+                <td><span className={`priority ${row.priority.toLowerCase()}`}>{row.priority}</span></td>
               </tr>
             ))}
           </tbody>
@@ -350,12 +373,12 @@ function ContactForm() {
       <div>
         <SectionHeader
           eyebrow="Contact"
-          title="Book an AI document workflow diagnosis"
-          subtitle="If your team works with test specifications, quality reports, supplier test files, or manufacturing engineering documents, submit your request and we will assess suitable AI use cases and PoC options."
+          title="Book an AI-assisted document workflow assessment"
+          subtitle="If your team works with test specifications, quality reports, supplier test files, or manufacturing engineering documents, submit your request and we will assess suitable workflow scenarios and PoC options."
         />
         <div className="contact-note">
           <strong>Good topics for the first discussion</strong>
-          <p>Test document comparison, supplier report review, 8D / CAPA reports, engineering knowledge bases, local deployment, and private cloud deployment.</p>
+          <p>Test document comparison, supplier report review, 8D / CAPA report drafts, engineering knowledge bases, on-premise deployment options, and private cloud options.</p>
         </div>
       </div>
 
@@ -398,8 +421,8 @@ function Footer() {
   return (
     <footer className="footer">
       <div>
-        <strong>Manufacturing AI Quality & Test Copilot</strong>
-        <p>AI assistant for quality, validation, and test engineering teams.</p>
+        <img src="/instrtek-logo.png" alt="InstrTek" />
+        <p>Manufacturing AI Quality & Test Copilot</p>
       </div>
       <button onClick={() => scrollToSection("contact")}>Book a Demo</button>
     </footer>
@@ -412,6 +435,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <PlatformSignals />
         <PainPoints />
         <ValueProps />
         <Solutions />
