@@ -45,6 +45,7 @@ Reposition the website from a broad AI founder toolkit into a focused B2B lead-g
 - Keep layouts restrained and professional, avoiding decorative or consumer-AI styling.
 - Use the official InstrTek logo from `instrtek 公司logo设计-1.pdf` as the primary website brand mark.
 - Raise the homepage toward a premium enterprise AI style: concise hero claim, strong navigation CTA, glassy console preview, platform signal band, and private-deployment trust messaging.
+- Integrate the logo with the blue-gray interface by reducing its visual weight and applying multiply blending so the white source background does not read as a pasted block.
 
 ### Business Hypothesis
 

@@ -67,8 +67,9 @@ main { overflow: hidden; }
 }
 .brand img {
   display: block;
-  width: clamp(132px, 15vw, 188px);
+  width: clamp(124px, 13vw, 168px);
   height: auto;
+  mix-blend-mode: multiply;
 }
 .brand-mark {
   width: 42px;
@@ -610,9 +611,9 @@ textarea { resize: vertical; }
 }
 .footer img {
   display: block;
-  width: 174px;
+  width: 150px;
   height: auto;
-  background: white;
+  background: rgba(255,255,255,0.9);
   border-radius: 10px;
   padding: 8px 10px;
 }
@@ -659,7 +660,7 @@ textarea { resize: vertical; }
   }
   .brand strong { font-size: 14px; }
   .brand small { display: none; }
-  .brand img { width: 136px; }
+  .brand img { width: 124px; }
   .site-nav { top: 72px; grid-template-columns: 1fr; }
   .section {
     padding: 58px 20px;
