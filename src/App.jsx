@@ -5,8 +5,9 @@ const TOOLS = [
     id: "paraphrase",
     name: "AI Paraphraser",
     desc: "Rewrite any text in a fresh, unique way while preserving the original meaning.",
-    icon: "\u2726",
-    color: "#6366f1",
+    icon: "P",
+    color: "#e8b4b8",
+    accent: "#2d1f2f",
     prompt: "Rewrite the following text in a completely different way while preserving the original meaning. Make it natural and fluent. Only output the rewritten text, nothing else.",
     placeholder: "Paste your text here to rewrite it...",
     buttonText: "Paraphrase",
@@ -15,8 +16,9 @@ const TOOLS = [
     id: "summarize",
     name: "AI Summarizer",
     desc: "Condense long articles, papers, or documents into clear, concise summaries.",
-    icon: "\u25C8",
-    color: "#0ea5e9",
+    icon: "S",
+    color: "#b4d4e8",
+    accent: "#1f2a2d",
     prompt: "Summarize the following text concisely. Capture all key points in a clear, well-structured summary. Only output the summary, nothing else.",
     placeholder: "Paste your article or document here to summarize...",
     buttonText: "Summarize",
@@ -25,9 +27,10 @@ const TOOLS = [
     id: "grammar",
     name: "Grammar Checker",
     desc: "Fix grammar, spelling, and punctuation errors instantly with AI-powered precision.",
-    icon: "\u25C9",
-    color: "#10b981",
-    prompt: "Check the following text for grammar, spelling, and punctuation errors. Output the corrected text first, then on a new line write '---CORRECTIONS---', then list each correction you made in the format: '\u2022 [original] \u2192 [corrected] (reason)'. If no errors found, just output the original text and say 'No errors found.'",
+    icon: "G",
+    color: "#b8e8b4",
+    accent: "#1f2d1f",
+    prompt: "Check the following text for grammar, spelling, and punctuation errors. Output the corrected text first, then on a new line write '---CORRECTIONS---', then list each correction you made in the format: '- [original] -> [corrected] (reason)'. If no errors found, just output the original text and say 'No errors found.'",
     placeholder: "Paste your text here to check for errors...",
     buttonText: "Check Grammar",
   },
@@ -45,7 +48,7 @@ const PLANS = [
   {
     name: "Pro",
     price: "$9",
-    period: "/month",
+    period: "/mo",
     features: ["Unlimited uses", "All tools included", "Priority speed", "API access", "No ads", "Early access to new tools"],
     cta: "Upgrade to Pro",
     highlighted: true,
@@ -53,55 +56,120 @@ const PLANS = [
   {
     name: "Team",
     price: "$29",
-    period: "/month",
+    period: "/mo",
     features: ["Everything in Pro", "Up to 10 members", "Team dashboard", "Usage analytics", "Priority support", "Custom integrations"],
     cta: "Contact Us",
     highlighted: false,
   },
 ];
 
+const css = `
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0a09;
+    --bg2: #1c1917;
+    --bg3: #292524;
+    --text: #fafaf9;
+    --text2: #a8a29e;
+    --text3: #78716c;
+    --accent: #e8b4b8;
+    --accent2: #b4d4e8;
+    --border: rgba(255,255,255,0.06);
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); }
+  textarea::placeholder { color: var(--text3); }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -10%); }
+    30% { transform: translate(3%, -15%); }
+    50% { transform: translate(-15%, 5%); }
+    70% { transform: translate(12%, -8%); }
+    90% { transform: translate(-8%, 13%); }
+  }
+
+  .grain::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+    animation: grain 8s steps(10) infinite;
+  }
+
+  .tool-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .nav-link:hover { color: var(--text) !important; }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-secondary:hover { background: var(--bg3); }
+  .plan-card:hover { transform: translateY(-4px); }
+`;
+
 function Navbar({ currentPage, setCurrentPage }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-      padding: "0 32px", height: 64, display: "flex", alignItems: "center", justifyContent: "space-between",
-      background: scrolled ? "rgba(8,8,16,0.92)" : "transparent",
-      backdropFilter: scrolled ? "blur(20px)" : "none",
-      borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "none",
-      transition: "all 0.3s ease",
-      fontFamily: "'DM Sans', sans-serif",
+      padding: "0 clamp(20px, 4vw, 48px)", height: 72,
+      display: "flex", alignItems: "center", justifyContent: "space-between",
+      background: scrolled ? "rgba(12,10,9,0.85)" : "transparent",
+      backdropFilter: scrolled ? "blur(24px) saturate(1.2)" : "none",
+      borderBottom: scrolled ? "1px solid var(--border)" : "none",
+      transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
     }}>
-      <div onClick={() => setCurrentPage("home")} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }}>
-        <div style={{
-          width: 32, height: 32, borderRadius: 8,
-          background: "linear-gradient(135deg, #6366f1, #0ea5e9)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 16, fontWeight: 800, color: "#fff",
-        }}>I</div>
-        <span style={{ fontSize: 18, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>InstrTek</span>
+      <div onClick={() => setCurrentPage("home")}
+        style={{ cursor: "pointer", display: "flex", alignItems: "baseline", gap: 2 }}>
+        <span style={{
+          fontFamily: "var(--serif)", fontSize: 26, fontWeight: 900,
+          fontStyle: "italic", color: "var(--accent)", letterSpacing: "-0.02em",
+        }}>Instr</span>
+        <span style={{
+          fontFamily: "var(--serif)", fontSize: 26, fontWeight: 400,
+          color: "var(--text)", letterSpacing: "-0.02em",
+        }}>Tek</span>
       </div>
-      <div style={{ display: "flex", gap: 8 }}>
+      <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
         {[
           { id: "home", label: "Home" },
           { id: "tools", label: "Tools" },
           { id: "pricing", label: "Pricing" },
         ].map(item => (
-          <button key={item.id} onClick={() => setCurrentPage(item.id)}
+          <button key={item.id} className="nav-link" onClick={() => setCurrentPage(item.id)}
             style={{
-              background: currentPage === item.id ? "rgba(99,102,241,0.15)" : "transparent",
-              color: currentPage === item.id ? "#a5b4fc" : "rgba(255,255,255,0.6)",
-              border: "none", borderRadius: 8, padding: "8px 16px",
-              fontSize: 14, fontWeight: 500, cursor: "pointer",
-              transition: "all 0.2s", fontFamily: "inherit",
-            }}
-          >{item.label}</button>
+              background: "none", border: "none", padding: "8px 18px",
+              fontSize: 15, fontWeight: 400, cursor: "pointer",
+              color: currentPage === item.id ? "var(--text)" : "var(--text3)",
+              fontFamily: "var(--sans)", transition: "color 0.2s",
+              letterSpacing: "0.01em",
+            }}>{item.label}</button>
         ))}
       </div>
     </nav>
@@ -109,100 +177,93 @@ function Navbar({ currentPage, setCurrentPage }) {
 }
 
 function HeroSection({ setCurrentPage }) {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
-
   return (
     <section style={{
       minHeight: "100vh", display: "flex", flexDirection: "column",
       alignItems: "center", justifyContent: "center", textAlign: "center",
-      padding: "120px 24px 80px", position: "relative", overflow: "hidden",
+      padding: "140px clamp(20px, 4vw, 48px) 100px",
+      position: "relative", overflow: "hidden",
     }}>
+      {/* Soft orbs */}
       <div style={{
-        position: "absolute", top: "20%", left: "50%", transform: "translate(-50%,-50%)",
-        width: 600, height: 600, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)",
-        filter: "blur(60px)", pointerEvents: "none",
+        position: "absolute", top: "15%", left: "55%",
+        width: 500, height: 500, borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(232,180,184,0.08) 0%, transparent 70%)",
+        filter: "blur(80px)", pointerEvents: "none",
       }} />
       <div style={{
-        position: "absolute", top: "60%", left: "30%", transform: "translate(-50%,-50%)",
+        position: "absolute", top: "55%", left: "25%",
         width: 400, height: 400, borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(14,165,233,0.1) 0%, transparent 70%)",
-        filter: "blur(50px)", pointerEvents: "none",
+        background: "radial-gradient(circle, rgba(180,212,232,0.06) 0%, transparent 70%)",
+        filter: "blur(70px)", pointerEvents: "none",
       }} />
 
-      <div style={{
-        opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)",
-        transition: "all 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
-      }}>
-        <div style={{
-          display: "inline-block", padding: "6px 16px", borderRadius: 100,
-          background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)",
-          fontSize: 13, color: "#a5b4fc", marginBottom: 32, fontWeight: 500,
-          fontFamily: "'DM Sans', sans-serif",
-        }}>
-          \u26A1 Free AI-Powered Tools \u2014 No Sign-up Required
-        </div>
-      </div>
+      <p style={{
+        fontSize: 13, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase",
+        color: "var(--accent)", marginBottom: 40, fontFamily: "var(--sans)",
+        animation: "fadeUp 0.8s ease both",
+      }}>Free AI-Powered Tools</p>
 
       <h1 style={{
-        fontSize: "clamp(40px, 7vw, 72px)", fontWeight: 800,
-        lineHeight: 1.05, margin: "0 0 24px",
-        fontFamily: "'Instrument Serif', Georgia, serif",
+        fontFamily: "var(--serif)", fontSize: "clamp(48px, 8vw, 88px)",
+        fontWeight: 400, lineHeight: 1.08, margin: "0 0 28px",
         letterSpacing: "-0.03em", maxWidth: 800,
-        opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)",
-        transition: "all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s",
+        animation: "fadeUp 0.8s ease 0.1s both",
       }}>
-        <span style={{ color: "#fff" }}>AI Tools That </span>
-        <span style={{
-          background: "linear-gradient(135deg, #6366f1, #0ea5e9, #10b981)",
-          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-        }}>Actually Work</span>
+        <span style={{ color: "var(--text)" }}>AI Tools That</span>
+        <br />
+        <em style={{ fontWeight: 700, color: "var(--accent)" }}>Actually Work</em>
       </h1>
 
       <p style={{
-        fontSize: 18, lineHeight: 1.7, color: "rgba(255,255,255,0.5)",
-        maxWidth: 540, margin: "0 0 48px", fontFamily: "'DM Sans', sans-serif",
-        opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)",
-        transition: "all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s",
+        fontSize: 18, lineHeight: 1.75, color: "var(--text2)",
+        maxWidth: 480, margin: "0 0 48px", fontWeight: 300,
+        animation: "fadeUp 0.8s ease 0.2s both",
       }}>
-        Paraphrase, summarize, check grammar, and more. Professional-grade AI tools, free and instant. No account needed.
+        Paraphrase, summarize, and check grammar with precision. Professional-grade, free, and instant.
       </p>
 
       <div style={{
         display: "flex", gap: 16, flexWrap: "wrap", justifyContent: "center",
-        opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)",
-        transition: "all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s",
+        animation: "fadeUp 0.8s ease 0.3s both",
       }}>
-        <button onClick={() => setCurrentPage("tools")} style={{
-          background: "linear-gradient(135deg, #6366f1, #4f46e5)",
-          color: "#fff", border: "none", borderRadius: 12, padding: "14px 32px",
-          fontSize: 16, fontWeight: 600, cursor: "pointer",
-          fontFamily: "'DM Sans', sans-serif",
-          boxShadow: "0 4px 24px rgba(99,102,241,0.3)",
-          transition: "all 0.2s",
-        }}>Try Free Tools \u2192</button>
-        <button onClick={() => setCurrentPage("pricing")} style={{
-          background: "rgba(255,255,255,0.05)", color: "#fff",
-          border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12,
-          padding: "14px 32px", fontSize: 16, fontWeight: 600,
-          cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
-          transition: "all 0.2s",
+        <button className="btn-primary" onClick={() => setCurrentPage("tools")} style={{
+          background: "var(--text)", color: "var(--bg)",
+          border: "none", borderRadius: 100, padding: "15px 36px",
+          fontSize: 15, fontWeight: 600, cursor: "pointer",
+          fontFamily: "var(--sans)", transition: "all 0.25s",
+          letterSpacing: "0.01em",
+        }}>Try Free Tools</button>
+        <button className="btn-secondary" onClick={() => setCurrentPage("pricing")} style={{
+          background: "var(--bg2)", color: "var(--text2)",
+          border: "1px solid var(--border)", borderRadius: 100,
+          padding: "15px 36px", fontSize: 15, fontWeight: 500,
+          cursor: "pointer", fontFamily: "var(--sans)", transition: "all 0.25s",
         }}>View Pricing</button>
       </div>
 
       <div style={{
-        display: "flex", gap: 48, marginTop: 80, flexWrap: "wrap", justifyContent: "center",
-        opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.5s",
+        display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1,
+        marginTop: 100, maxWidth: 660, width: "100%",
+        background: "var(--border)", borderRadius: 16, overflow: "hidden",
+        animation: "fadeIn 0.8s ease 0.5s both",
       }}>
         {TOOLS.map(t => (
           <div key={t.id} onClick={() => setCurrentPage(t.id)} style={{
-            textAlign: "center", cursor: "pointer", padding: 20, borderRadius: 16,
-            transition: "all 0.3s", border: "1px solid transparent",
-          }}>
-            <div style={{ fontSize: 28, marginBottom: 8, color: t.color }}>{t.icon}</div>
-            <div style={{ fontSize: 15, fontWeight: 600, color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>{t.name}</div>
-            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 4, fontFamily: "'DM Sans', sans-serif" }}>Try now \u2192</div>
+            background: "var(--bg2)", padding: "32px 20px", cursor: "pointer",
+            textAlign: "center", transition: "background 0.3s",
+          }}
+            onMouseEnter={e => e.currentTarget.style.background = "var(--bg3)"}
+            onMouseLeave={e => e.currentTarget.style.background = "var(--bg2)"}
+          >
+            <div style={{
+              width: 40, height: 40, borderRadius: "50%", margin: "0 auto 14px",
+              background: t.color, display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 16, fontWeight: 700, color: "var(--bg)",
+              fontFamily: "var(--serif)",
+            }}>{t.icon}</div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text)", marginBottom: 4 }}>{t.name}</div>
+            <div style={{ fontSize: 12, color: "var(--text3)" }}>Try now</div>
           </div>
         ))}
       </div>
@@ -227,12 +288,8 @@ function ToolPage({ tool, setCurrentPage }) {
         body: JSON.stringify({ prompt: tool.prompt, text: input }),
       });
       const data = await response.json();
-      if (data.error) {
-        setOutput("Error: " + data.error);
-      } else {
-        setOutput(data.result || "Something went wrong. Please try again.");
-      }
-    } catch (err) {
+      setOutput(data.error ? "Error: " + data.error : data.result || "Something went wrong.");
+    } catch {
       setOutput("Error: Unable to process your request. Please try again later.");
     }
     setLoading(false);
@@ -246,78 +303,83 @@ function ToolPage({ tool, setCurrentPage }) {
 
   return (
     <section style={{
-      minHeight: "100vh", padding: "96px 24px 60px",
-      maxWidth: 800, margin: "0 auto", fontFamily: "'DM Sans', sans-serif",
+      minHeight: "100vh", padding: "120px clamp(20px, 4vw, 48px) 80px",
+      maxWidth: 720, margin: "0 auto",
     }}>
       <button onClick={() => setCurrentPage("tools")} style={{
-        background: "none", border: "none", color: "rgba(255,255,255,0.4)",
-        fontSize: 14, cursor: "pointer", marginBottom: 24, padding: 0,
-        fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6,
-      }}>\u2190 Back to Tools</button>
+        background: "none", border: "none", color: "var(--text3)",
+        fontSize: 14, cursor: "pointer", marginBottom: 40, padding: 0,
+        fontFamily: "var(--sans)", transition: "color 0.2s",
+      }}
+        onMouseEnter={e => e.target.style.color = "var(--text)"}
+        onMouseLeave={e => e.target.style.color = "var(--text3)"}
+      >Back to Tools</button>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 8 }}>
-        <span style={{ fontSize: 32, color: tool.color }}>{tool.icon}</span>
+      <div style={{ marginBottom: 40 }}>
+        <div style={{
+          width: 52, height: 52, borderRadius: "50%", marginBottom: 20,
+          background: tool.color, display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 20, fontWeight: 700, color: "var(--bg)", fontFamily: "var(--serif)",
+        }}>{tool.icon}</div>
         <h1 style={{
-          fontSize: 32, fontWeight: 800, color: "#fff", margin: 0,
-          fontFamily: "'Instrument Serif', Georgia, serif", letterSpacing: "-0.02em",
+          fontFamily: "var(--serif)", fontSize: 36, fontWeight: 700,
+          color: "var(--text)", margin: "0 0 10px", letterSpacing: "-0.02em",
         }}>{tool.name}</h1>
+        <p style={{ color: "var(--text2)", fontSize: 16, margin: 0, lineHeight: 1.6, fontWeight: 300 }}>{tool.desc}</p>
       </div>
-      <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 16, margin: "0 0 32px", lineHeight: 1.6 }}>{tool.desc}</p>
 
       <div style={{
-        background: "rgba(255,255,255,0.02)", borderRadius: 16,
-        border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden",
+        background: "var(--bg2)", borderRadius: 16,
+        border: "1px solid var(--border)", overflow: "hidden",
       }}>
-        <div style={{ padding: 20 }}>
-          <textarea
-            value={input} onChange={e => setInput(e.target.value)}
-            placeholder={tool.placeholder}
-            style={{
-              width: "100%", minHeight: 180, background: "transparent",
-              border: "none", outline: "none", color: "#fff", fontSize: 15,
-              lineHeight: 1.7, resize: "vertical", fontFamily: "'DM Sans', sans-serif",
-              boxSizing: "border-box",
-            }}
-          />
-        </div>
+        <textarea
+          value={input} onChange={e => setInput(e.target.value)}
+          placeholder={tool.placeholder}
+          style={{
+            width: "100%", minHeight: 200, background: "transparent",
+            border: "none", outline: "none", color: "var(--text)", fontSize: 15,
+            lineHeight: 1.75, resize: "vertical", fontFamily: "var(--sans)",
+            padding: "24px", fontWeight: 300, boxSizing: "border-box",
+          }}
+        />
         <div style={{
-          padding: "12px 20px", borderTop: "1px solid rgba(255,255,255,0.06)",
+          padding: "14px 24px", borderTop: "1px solid var(--border)",
           display: "flex", justifyContent: "space-between", alignItems: "center",
         }}>
-          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
-            {input.length > 0 ? `${input.split(/\s+/).filter(Boolean).length} words` : ""}
+          <span style={{ fontSize: 12, color: "var(--text3)", fontWeight: 500 }}>
+            {input.trim() ? `${input.split(/\s+/).filter(Boolean).length} words` : ""}
           </span>
           <button onClick={handleSubmit} disabled={!input.trim() || loading}
             style={{
-              background: loading ? "rgba(255,255,255,0.1)" : `linear-gradient(135deg, ${tool.color}, ${tool.color}dd)`,
-              color: "#fff", border: "none", borderRadius: 10, padding: "10px 24px",
-              fontSize: 14, fontWeight: 600, cursor: loading ? "wait" : "pointer",
-              fontFamily: "inherit", opacity: !input.trim() ? 0.4 : 1,
-              transition: "all 0.2s",
-            }}
-          >{loading ? "Processing..." : tool.buttonText}</button>
+              background: loading ? "var(--bg3)" : tool.color,
+              color: "var(--bg)", border: "none", borderRadius: 100,
+              padding: "10px 28px", fontSize: 14, fontWeight: 600,
+              cursor: loading ? "wait" : "pointer", fontFamily: "var(--sans)",
+              opacity: !input.trim() ? 0.3 : 1, transition: "all 0.2s",
+            }}>{loading ? "Processing..." : tool.buttonText}</button>
         </div>
       </div>
 
       {output && (
         <div style={{
-          marginTop: 24, background: "rgba(255,255,255,0.02)", borderRadius: 16,
-          border: "1px solid rgba(255,255,255,0.06)", overflow: "hidden",
+          marginTop: 20, background: "var(--bg2)", borderRadius: 16,
+          border: "1px solid var(--border)", overflow: "hidden",
+          animation: "fadeUp 0.4s ease both",
         }}>
           <div style={{
-            padding: "12px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)",
+            padding: "14px 24px", borderBottom: "1px solid var(--border)",
             display: "flex", justifyContent: "space-between", alignItems: "center",
           }}>
-            <span style={{ fontSize: 13, fontWeight: 600, color: tool.color }}>Result</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: tool.color, letterSpacing: "0.08em", textTransform: "uppercase" }}>Result</span>
             <button onClick={handleCopy} style={{
-              background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 6,
-              padding: "6px 14px", fontSize: 12, color: "rgba(255,255,255,0.6)",
-              cursor: "pointer", fontFamily: "inherit",
-            }}>{copied ? "\u2713 Copied" : "Copy"}</button>
+              background: "var(--bg3)", border: "none", borderRadius: 100,
+              padding: "5px 16px", fontSize: 12, color: "var(--text2)",
+              cursor: "pointer", fontFamily: "var(--sans)", fontWeight: 500,
+            }}>{copied ? "Copied!" : "Copy"}</button>
           </div>
           <div style={{
-            padding: 20, color: "rgba(255,255,255,0.85)", fontSize: 15,
-            lineHeight: 1.8, whiteSpace: "pre-wrap",
+            padding: 24, color: "var(--text)", fontSize: 15,
+            lineHeight: 1.8, whiteSpace: "pre-wrap", fontWeight: 300,
           }}>{output}</div>
         </div>
       )}
@@ -328,47 +390,64 @@ function ToolPage({ tool, setCurrentPage }) {
 function ToolsPage({ setCurrentPage }) {
   return (
     <section style={{
-      minHeight: "100vh", padding: "112px 24px 60px",
-      maxWidth: 900, margin: "0 auto", fontFamily: "'DM Sans', sans-serif",
+      minHeight: "100vh", padding: "140px clamp(20px, 4vw, 48px) 80px",
+      maxWidth: 900, margin: "0 auto",
     }}>
-      <h1 style={{
-        fontSize: 40, fontWeight: 800, color: "#fff", marginBottom: 8, textAlign: "center",
-        fontFamily: "'Instrument Serif', Georgia, serif", letterSpacing: "-0.02em",
-      }}>AI Tools</h1>
-      <p style={{
-        color: "rgba(255,255,255,0.4)", fontSize: 16, textAlign: "center",
-        marginBottom: 48, lineHeight: 1.6,
-      }}>Professional-grade AI tools, free and instant.</p>
+      <div style={{ textAlign: "center", marginBottom: 60 }}>
+        <p style={{
+          fontSize: 13, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase",
+          color: "var(--accent)", marginBottom: 16,
+        }}>Toolkit</p>
+        <h1 style={{
+          fontFamily: "var(--serif)", fontSize: "clamp(36px, 5vw, 52px)",
+          fontWeight: 400, color: "var(--text)", margin: "0 0 12px",
+          letterSpacing: "-0.02em",
+        }}>AI Tools</h1>
+        <p style={{ color: "var(--text3)", fontSize: 16, fontWeight: 300 }}>
+          Professional-grade, free, and instant.
+        </p>
+      </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 16 }}>
-        {TOOLS.map(t => (
-          <div key={t.id} onClick={() => setCurrentPage(t.id)}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 16 }}>
+        {TOOLS.map((t, i) => (
+          <div key={t.id} className="tool-card" onClick={() => setCurrentPage(t.id)}
             style={{
-              background: "rgba(255,255,255,0.02)", borderRadius: 16,
-              border: "1px solid rgba(255,255,255,0.06)", padding: 28,
-              cursor: "pointer", transition: "all 0.3s",
-            }}
-          >
+              background: "var(--bg2)", borderRadius: 20,
+              border: "1px solid var(--border)", padding: "36px 28px",
+              cursor: "pointer", transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+              animation: `fadeUp 0.6s ease ${i * 0.1}s both`,
+            }}>
             <div style={{
-              width: 48, height: 48, borderRadius: 12, marginBottom: 16,
-              background: t.color + "15", display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 22, color: t.color,
+              width: 48, height: 48, borderRadius: "50%", marginBottom: 20,
+              background: t.color, display: "flex", alignItems: "center", justifyContent: "center",
+              fontSize: 18, fontWeight: 700, color: "var(--bg)", fontFamily: "var(--serif)",
             }}>{t.icon}</div>
-            <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", margin: "0 0 8px" }}>{t.name}</h3>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", margin: 0, lineHeight: 1.6 }}>{t.desc}</p>
-            <div style={{ marginTop: 16, fontSize: 13, fontWeight: 600, color: t.color }}>Use tool \u2192</div>
+            <h3 style={{
+              fontFamily: "var(--serif)", fontSize: 20, fontWeight: 700,
+              color: "var(--text)", margin: "0 0 10px",
+            }}>{t.name}</h3>
+            <p style={{
+              fontSize: 14, color: "var(--text3)", margin: "0 0 20px",
+              lineHeight: 1.65, fontWeight: 300,
+            }}>{t.desc}</p>
+            <span style={{
+              fontSize: 13, fontWeight: 600, color: t.color,
+              letterSpacing: "0.02em",
+            }}>Use tool &rarr;</span>
           </div>
         ))}
 
         <div style={{
-          background: "rgba(255,255,255,0.01)", borderRadius: 16,
-          border: "1px dashed rgba(255,255,255,0.08)", padding: 28,
+          background: "transparent", borderRadius: 20,
+          border: "1px dashed rgba(255,255,255,0.08)", padding: "36px 28px",
           display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-          textAlign: "center", minHeight: 200,
+          textAlign: "center",
         }}>
-          <div style={{ fontSize: 28, marginBottom: 12, opacity: 0.3 }}>+</div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.3)" }}>More tools coming soon</div>
-          <div style={{ fontSize: 13, color: "rgba(255,255,255,0.2)", marginTop: 4 }}>Stay tuned</div>
+          <div style={{
+            fontFamily: "var(--serif)", fontSize: 32, color: "var(--text3)",
+            marginBottom: 8, opacity: 0.4,
+          }}>+</div>
+          <div style={{ fontSize: 14, fontWeight: 500, color: "var(--text3)" }}>More coming soon</div>
         </div>
       </div>
     </section>
@@ -378,55 +457,75 @@ function ToolsPage({ setCurrentPage }) {
 function PricingPage() {
   return (
     <section style={{
-      minHeight: "100vh", padding: "112px 24px 60px",
-      maxWidth: 1000, margin: "0 auto", fontFamily: "'DM Sans', sans-serif",
+      minHeight: "100vh", padding: "140px clamp(20px, 4vw, 48px) 80px",
+      maxWidth: 960, margin: "0 auto",
     }}>
-      <h1 style={{
-        fontSize: 40, fontWeight: 800, color: "#fff", marginBottom: 8, textAlign: "center",
-        fontFamily: "'Instrument Serif', Georgia, serif", letterSpacing: "-0.02em",
-      }}>Simple Pricing</h1>
-      <p style={{
-        color: "rgba(255,255,255,0.4)", fontSize: 16, textAlign: "center",
-        marginBottom: 48, lineHeight: 1.6,
-      }}>Start free. Upgrade when you need more.</p>
+      <div style={{ textAlign: "center", marginBottom: 60 }}>
+        <p style={{
+          fontSize: 13, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase",
+          color: "var(--accent)", marginBottom: 16,
+        }}>Pricing</p>
+        <h1 style={{
+          fontFamily: "var(--serif)", fontSize: "clamp(36px, 5vw, 52px)",
+          fontWeight: 400, color: "var(--text)", margin: "0 0 12px",
+          letterSpacing: "-0.02em",
+        }}>Simple, Transparent</h1>
+        <p style={{ color: "var(--text3)", fontSize: 16, fontWeight: 300 }}>
+          Start free. Upgrade when you need more.
+        </p>
+      </div>
 
       <div style={{
-        display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+        display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))",
         gap: 16, alignItems: "start",
       }}>
-        {PLANS.map(plan => (
-          <div key={plan.name} style={{
-            background: plan.highlighted ? "rgba(99,102,241,0.06)" : "rgba(255,255,255,0.02)",
-            borderRadius: 20, padding: 32,
-            border: plan.highlighted ? "1px solid rgba(99,102,241,0.25)" : "1px solid rgba(255,255,255,0.06)",
-            position: "relative",
+        {PLANS.map((plan, i) => (
+          <div key={plan.name} className="plan-card" style={{
+            background: plan.highlighted ? "var(--bg3)" : "var(--bg2)",
+            borderRadius: 20, padding: "36px 28px",
+            border: plan.highlighted ? "1px solid rgba(232,180,184,0.2)" : "1px solid var(--border)",
+            position: "relative", transition: "all 0.3s",
+            animation: `fadeUp 0.6s ease ${i * 0.1}s both`,
           }}>
             {plan.highlighted && (
               <div style={{
-                position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)",
-                background: "linear-gradient(135deg, #6366f1, #4f46e5)", color: "#fff",
+                position: "absolute", top: -11, left: 28,
+                background: "var(--accent)", color: "var(--bg)",
                 fontSize: 11, fontWeight: 700, padding: "4px 14px", borderRadius: 100,
-                textTransform: "uppercase", letterSpacing: "0.05em",
-              }}>Most Popular</div>
+                letterSpacing: "0.06em", textTransform: "uppercase",
+              }}>Popular</div>
             )}
-            <h3 style={{ fontSize: 18, fontWeight: 700, color: "#fff", margin: "0 0 4px" }}>{plan.name}</h3>
-            <div style={{ display: "flex", alignItems: "baseline", gap: 4, margin: "16px 0 24px" }}>
-              <span style={{ fontSize: 44, fontWeight: 800, color: "#fff", letterSpacing: "-0.03em" }}>{plan.price}</span>
-              <span style={{ fontSize: 15, color: "rgba(255,255,255,0.4)" }}>{plan.period}</span>
+            <h3 style={{
+              fontFamily: "var(--sans)", fontSize: 14, fontWeight: 600,
+              color: "var(--text2)", margin: "0 0 16px",
+              letterSpacing: "0.08em", textTransform: "uppercase",
+            }}>{plan.name}</h3>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 4, margin: "0 0 28px" }}>
+              <span style={{
+                fontFamily: "var(--serif)", fontSize: 48, fontWeight: 700,
+                color: "var(--text)", letterSpacing: "-0.03em",
+              }}>{plan.price}</span>
+              <span style={{ fontSize: 14, color: "var(--text3)", fontWeight: 400 }}>{plan.period}</span>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 28 }}>
-              {plan.features.map((f, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ color: "#6366f1", fontSize: 14 }}>\u2713</span>
-                  <span style={{ fontSize: 14, color: "rgba(255,255,255,0.6)" }}>{f}</span>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 32 }}>
+              {plan.features.map((f, j) => (
+                <div key={j} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <div style={{
+                    width: 5, height: 5, borderRadius: "50%",
+                    background: plan.highlighted ? "var(--accent)" : "var(--text3)",
+                    flexShrink: 0,
+                  }} />
+                  <span style={{ fontSize: 14, color: "var(--text2)", fontWeight: 300 }}>{f}</span>
                 </div>
               ))}
             </div>
             <button style={{
-              width: "100%", padding: "12px 0", borderRadius: 10, fontSize: 14, fontWeight: 600,
-              cursor: "pointer", fontFamily: "inherit", transition: "all 0.2s",
-              background: plan.highlighted ? "linear-gradient(135deg, #6366f1, #4f46e5)" : "rgba(255,255,255,0.06)",
-              color: "#fff", border: plan.highlighted ? "none" : "1px solid rgba(255,255,255,0.08)",
+              width: "100%", padding: "13px 0", borderRadius: 100, fontSize: 14, fontWeight: 600,
+              cursor: "pointer", fontFamily: "var(--sans)", transition: "all 0.2s",
+              background: plan.highlighted ? "var(--text)" : "transparent",
+              color: plan.highlighted ? "var(--bg)" : "var(--text2)",
+              border: plan.highlighted ? "none" : "1px solid var(--border)",
+              letterSpacing: "0.01em",
             }}>{plan.cta}</button>
           </div>
         ))}
@@ -438,20 +537,23 @@ function PricingPage() {
 function Footer() {
   return (
     <footer style={{
-      padding: "48px 24px", borderTop: "1px solid rgba(255,255,255,0.04)",
-      textAlign: "center", fontFamily: "'DM Sans', sans-serif",
+      padding: "48px clamp(20px, 4vw, 48px)",
+      borderTop: "1px solid var(--border)",
+      display: "flex", justifyContent: "space-between", alignItems: "center",
+      flexWrap: "wrap", gap: 16,
     }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 16 }}>
-        <div style={{
-          width: 24, height: 24, borderRadius: 6,
-          background: "linear-gradient(135deg, #6366f1, #0ea5e9)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 12, fontWeight: 800, color: "#fff",
-        }}>I</div>
-        <span style={{ fontSize: 15, fontWeight: 700, color: "rgba(255,255,255,0.6)" }}>InstrTek</span>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 2 }}>
+        <span style={{
+          fontFamily: "var(--serif)", fontSize: 18, fontWeight: 900,
+          fontStyle: "italic", color: "var(--accent)", letterSpacing: "-0.02em",
+        }}>Instr</span>
+        <span style={{
+          fontFamily: "var(--serif)", fontSize: 18, fontWeight: 400,
+          color: "var(--text3)", letterSpacing: "-0.02em",
+        }}>Tek</span>
       </div>
-      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", margin: 0 }}>
-        \u00A9 2026 InstrTek. All rights reserved.
+      <p style={{ fontSize: 13, color: "var(--text3)", fontWeight: 300 }}>
+        &copy; 2026 InstrTek. All rights reserved.
       </p>
     </footer>
   );
@@ -459,20 +561,12 @@ function Footer() {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
-
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [currentPage]);
-
   const tool = TOOLS.find(t => t.id === currentPage);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#08080f", color: "#fff" }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-      <style>{`
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #08080f; }
-        textarea::placeholder { color: rgba(255,255,255,0.25); }
-      `}</style>
-
+    <div className="grain" style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--text)" }}>
+      <style>{css}</style>
       <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {currentPage === "home" && <HeroSection setCurrentPage={setCurrentPage} />}
       {currentPage === "tools" && <ToolsPage setCurrentPage={setCurrentPage} />}
